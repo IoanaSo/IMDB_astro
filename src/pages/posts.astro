@@ -1,0 +1,58 @@
+---
+import { supabase } from '../lib/spClient'
+
+// Obtener todos los datos de la tabla "basics1"
+const { data: posts, error } = await supabase
+  .from('basics1')
+  .select('*')
+  .limit(10)
+
+if (error) {
+  console.error(error)
+}
+---
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Posts desde Supabase</title>
+  </head>
+  <body>
+    <h1>Lista de Posts (basics1)</h1>
+
+    {posts && posts.length > 0 ? (
+      <table border="1" cellpadding="6">
+        <thead>
+          <tr>
+            <th>tconst</th>
+            <th>titleType</th>
+            <th>primaryTitle</th>
+            <th>originalTitle</th>
+            <th>isAdult</th>
+            <th>startYear</th>
+            <th>endYear</th>
+            <th>runtimeMinutes</th>
+            <th>genres</th>
+          </tr>
+        </thead>
+        <tbody>
+          {posts.map(post => (
+            <tr>
+              <td>{post.tconst}</td>
+              <td>{post.titleType}</td>
+              <td>{post.primaryTitle}</td>
+              <td>{post.originalTitle}</td>
+              <td>{post.isAdult}</td>
+              <td>{post.startYear}</td>
+              <td>{post.endYear}</td>
+              <td>{post.runtimeMinutes}</td>
+              <td>{post.genres}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    ) : (
+      <p>No hay datos en la tabla basics1.</p>
+    )}
+  </body>
+</html>

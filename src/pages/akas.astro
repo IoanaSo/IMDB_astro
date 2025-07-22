@@ -1,0 +1,78 @@
+---
+import { supabase } from '../lib/spClient'
+
+// Obtener todos los registros de la tabla "akas1"
+const { data: akas, error } = await supabase
+  .from('akas1')
+  .select('*')
+  .limit(10)
+
+if (error) {
+  console.error('Error al obtener los datos de akas1:', error.message)
+}
+---
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>AKAs</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 1rem;
+        font-family: sans-serif;
+      }
+      th, td {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        vertical-align: top;
+        word-break: break-word;
+      }
+      th {
+        background-color: #f0f0f0;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition no-underline">
+      ⬅️ Tornar a l'inici
+    </a>
+
+    <h1>AKAs</h1>
+
+    {akas && akas.length > 0 ? (
+      <table>
+        <thead>
+          <tr>
+            <th>titleId</th>
+            <th>ordering</th>
+            <th>title</th>
+            <th>region</th>
+            <th>language</th>
+            <th>types</th>
+            <th>attributes</th>
+            <th>isOriginalTitle</th>
+          </tr>
+        </thead>
+        <tbody>
+          {akas.map(item => (
+            <tr>
+              <td>{item.titleId}</td>
+              <td>{item.ordering}</td>
+              <td>{item.title}</td>
+              <td>{item.region}</td>
+              <td>{item.language}</td>
+              <td>{item.types}</td>
+              <td>{item.attributes}</td>
+              <td>{item.isOriginalTitle}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    ) : (
+      <p>No hay datos en la tabla akas1.</p>
+    )}
+  </body>
+</html>

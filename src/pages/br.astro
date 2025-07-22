@@ -1,0 +1,93 @@
+---
+import { supabase } from '../lib/spClient'
+
+// Obtener todos los registros de la tabla "br1"
+const { data: br1data, error } = await supabase
+  .from('br1')
+  .select('*')
+  .limit(10)
+
+if (error) {
+  console.error('Error al obtener los datos de br1:', error.message)
+}
+---
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>BR1 Table</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 1rem;
+        font-family: sans-serif;
+      }
+      th, td {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        vertical-align: top;
+        word-break: break-word;
+      }
+      th {
+        background-color: #f0f0f0;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body class="bg-gradient-to-r from-yellow-200 via-gray-200 to-grey-400 p-10 text-gray-900 font-sans">
+    <a href="/" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition no-underline">
+      ⬅️ Tornar a l'inici
+    </a>
+
+    <h1>Basics i Ratings</h1>
+
+    {br1data && br1data.length > 0 ? (
+      <table>
+        <thead>
+          <tr>
+            <th>tconst</th>
+            <th>titleType</th>
+            <th>primaryTitle</th>
+            <th>originalTitle</th>
+            <th>isAdult</th>
+            <th>startYear</th>
+            <th>endYear</th>
+            <th>runtimeMinutes</th>
+            <th>genres</th>
+            <th>averageRating</th>
+            <th>numVotes</th>
+          </tr>
+        </thead>
+        <tbody>
+          {br1data.map((item) => (
+            <tr>
+              <td>{item.tconst}</td>
+              <td>{item.titleType}</td>
+              <td>{item.primaryTitle}</td>
+              <td>{item.originalTitle}</td>
+              <td>{item.isAdult ?? '—'}</td>
+              <td>{item.startYear ?? '—'}</td>
+              <td>{item.endYear ?? '—'}</td>
+              <td>{item.runtimeMinutes}</td>
+              <td>{item.genres}</td>
+              <td>{item.averageRating ?? '—'}</td>
+              <td>{item.numVotes ?? '—'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    ) : (
+      <p>No hay datos en la tabla br1.</p>
+    )}
+    <br><br>
+    <img src="/assets/tipusav.png" alt="Tipus audiovisuals" /><br><br>
+    <img src="/assets/numtipusav.png" alt="Numero Tipus audiovisuals" /><br>
+    <img src="/assets/averager.png" alt="Average Rating" /><br>
+     <img src="/assets/boxARGenres.png" alt="Valoracions" /><br><br>
+    <img src="/assets/numVotesGen.png" alt="Numero de Vots per Genere" /><br>
+    <img src="/assets/ARGenres.png" alt="Valoracions per Genere" /><br><br>
+    <img src="/assets/boxAG.png" alt="Valoracions per Genere" />
+    
+  </body>
+</html>

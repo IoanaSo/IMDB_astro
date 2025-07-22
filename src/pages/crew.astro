@@ -1,0 +1,64 @@
+---
+import { supabase } from '../lib/spClient'
+
+// Obtener todos los registros de la tabla "crew1"
+const { data: crewList, error } = await supabase
+  .from('crew1')
+  .select('*')
+  .limit(10)
+
+if (error) {
+  console.error('Error al obtener los datos de crew1:', error.message)
+}
+---
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Crew</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 1rem;
+        font-family: sans-serif;
+      }
+      th, td {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        vertical-align: top;
+        word-break: break-word;
+      }
+      th {
+        background-color: #f0f0f0;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Crew</h1>
+
+    {crewList && crewList.length > 0 ? (
+      <table>
+        <thead>
+          <tr>
+            <th>tconst</th>
+            <th>Directores</th>
+            <th>Guionistas</th>
+          </tr>
+        </thead>
+        <tbody>
+          {crewList.map((item) => (
+            <tr>
+              <td>{item.tconst}</td>
+              <td>{item.directors || '—'}</td>
+              <td>{item.writers || '—'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    ) : (
+      <p>No hay datos en la tabla crew1.</p>
+    )}
+  </body>
+</html>

@@ -1,0 +1,165 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../styles/global.css';
+
+---
+
+<Layout>
+	<html lang="ca">
+
+		<head>
+			<meta charset="UTF-8" />
+			<title>Catàleg IMDb</title>
+		</head>
+
+		<body class="bg-gradient-to-r from-yellow-200 via-gray-200 to-grey-400 p-10 text-gray-900 font-sans">
+
+			<header class="mb-6">        
+				<nav class="flex flex-col md:flex-row md:justify-between items-center gap-4 bg-gradient-to-r from-black via-gray-300 to-yellow-300 p-10 text-gray-900 font-sans rounded-xl shadow-lg">
+					<img src="/assets/imbd.jpg" alt="IMBD image" class="imbd"/>
+					<!--Menú amb les bases de dates -->
+					<div class="dropdown"> 
+						<button id="dropdownToggle" class="dropdown-button bg-purple-500 hover:bg-purple-600">Bases de dades</button>
+						<div class="dropdown-content" id="dropdownMenu">
+						<a href="/br">BR</a>
+						<a href="/akas">Akas</a>
+						<a href="/basics">Basics</a>
+						<a href="/crew">Crew</a>
+						<a href="/episode">Episode</a>
+						<a href="/namebasics">Namebasics</a>
+						<a href="/principals">Principals</a>
+						<a href="/ratings">Ratings</a>
+						</div>
+					</div>
+
+					<!-- 🔀 Selector de seccions -->
+					<div class="flex gap-2 mt-1">
+						<button id="showTop10" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Top 10</button>
+						<button id="showExplorer" class="bg-purple-500 text-white px-3 py-1 rounded hover:bg-purple-600">Explora</button>
+					</div>
+
+
+					<!-- 🔍 Cercador -->
+					<div class="cercador relative flex items-center">
+						<label for="searchType" class="font-semibold text-purple-600">Cerca per:</label>
+						<select id="searchType" class="rounded border-gray-800">
+						<option value="titles">Títols</option>
+						<option value="actors">Actors</option>
+						</select>
+						<div class="relative">
+						<input type="text" id="searchInput" placeholder="Escriu aquí..." class="rounded p-1 border" />
+						<button id="clearSearch" class="absolute right-1 top-1 text-gray-500 hover:text-red-500 hidden">✕</button>
+						<ul id="resultsList" class="absolute z-10 mt-2 w-full bg-white border rounded shadow text-left text-sm text-gray-700 hidden"></ul>
+						</div>
+					</div>
+				</nav>
+			</header>
+			
+			<!-- 📌 Modal de detalls -->
+			<div id="detailsModal" class="fixed inset-0 bg-black bg-opacity-25 backdrop-blur- flex items-center justify-center z-50 hidden">
+				<div class="bg-white rounded-lg p-6 w-[90%] max-w-xl shadow-xl text-gray-800 relative">
+					<button id="closeModal" class="absolute top-3 right-4 text-gray-500 hover:text-black text-lg">✖</button>
+					<h2 id="modalTitle" class="text-2xl font-bold mb-3"></h2>
+					<p id="modalInfo" class="text-sm mb-4"></p>
+					
+					<!-- 🔢 Valoració -->
+					<label class="block mb-2 font-medium">Valora aquesta obra:</label>
+					<div id="ratingButtons" class="flex flex-wrap gap-2 mb-4">
+						<!-- Els botons es generaran amb JavaScript -->
+					</div>
+					<button id="submitRating" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
+						Enviar valoració
+					</button>
+				</div>
+			</div>
+
+
+			<!-- 🎬 Movies Carousel -->
+
+			<!--bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400
+			<section id="top10Section" class="mt-20 mb-10 p-6 bg-gradient-to-r  from-black via-grey-300 to-yellow-300 rounded-xl shadow-lg"> 
+			<h2 class="text-3xl font-extrabold text-white mb-4">Top 10 Pel·lícules</h2>
+			<div id="moviesCarousel" class="flex overflow-x-auto space-x-4 scroll-smooth snap-x snap-mandatory p-3">
+			</section>-->
+			
+			<section id="top10Section" class="relative mt-20 mb-10 p-6 bg-gradient-to-r from-black via-gray-300 to-yellow-300 rounded-xl shadow-lg">
+				<h2 class="text-3xl font-extrabold text-white mb-4">Top 10 Pel·lícules</h2>
+
+				<div id="carouselWrapper" class="overflow-hidden w-full mx-2 mx-auto relative p-4">
+					<button id="prevBtn" class="absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg transition duration-300">
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+						</svg>
+					</button>
+					<button id="nextBtn" class="absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg transition duration-300">
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+						</svg>
+					</button>
+					<div id="moviesCarousel" class="flex transition-transform duration-500 ease-in-out z-100">
+					<!-- targetes aquí -->
+					</div>
+				</div>
+			</section>
+
+
+			<!-- 📺 Series Carousel -->
+			<section id="seriesSection" class="relative mt-20 mb-10  p-6 bg-gradient-to-r from-black via-gray-300 to-yellow-300 rounded-xl shadow-lg">
+				<h2 class="text-3xl font-extrabold text-white mb-4">Top 10 Sèries</h2>
+				<div id="carouselWrapper" class="overflow-hidden w-full  mx-auto relative p-4">
+					<button id="prevBtnS" class="absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg transition duration-300">
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+						</svg>
+					</button>
+					<button id="nextBtnS" class="absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg transition duration-300">
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+						</svg>
+					</button>
+					<div id="seriesCarousel" class="flex transition-transform duration-500 ease-in-out">
+					<!-- targetes aquí -->
+					</div>
+				</div>
+			</section>
+
+			<section id="explorerSection" class="mt-20 mb-10 p-6 bg-gradient-to-r  from-black via-gray-300 to-yellow-300 rounded-xl shadow-lg">
+				<h2 class="text-3xl font-extrabold text-white mb-6"> Explora pel·lícules i sèries</h2>
+				<!-- Botons -->
+				<div class="flex gap-4 mb-4">
+					<button id="btnMovies" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Pel·lícules</button>
+					<button id="btnSeries" class="bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700">Sèries</button>
+				</div>
+				<!-- Filtres -->
+				<div class="flex flex-wrap gap-4 mb-6">
+					<select id="sortSelect" class="rounded p-2 border border-gray-800 text-black bg-white">
+						<option value="rating">Ordena per valoració</option>
+						<option value="az">Nom A-Z</option>
+						<option value="za">Nom Z-A</option>
+					</select>
+					<select id="genreSelect" class="rounded p-2 border border-gray-800 text-black bg-white">
+						<option value="">Tots els gèneres</option>
+						<option value="Action">Acció</option>
+						<option value="Comedy">Comèdia</option>
+						<option value="Drama">Drama</option>
+						<option value="Horror">Terror</option>
+						<option value="Romance">Romàntic</option>
+					</select>
+				</div>
+
+				<!-- Contingut secció-->
+				<div id="mediaGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 mx-auto"></div>
+			</section>
+
+		</body>
+	</html>
+	<script type="module" src="/src/scripts/imbd.js"></script>
+	<!--<script type="module" src="/src/scripts/supabase.js"></script>
+	<script type="module" src="/src/scripts/dom_elements.js"></script>
+	<script type="module" src="/src/scripts/search.js"></script>
+	<script type="module" src="/src/scripts/dropdown.js"></script>
+	<script type="module" src="/src/scripts/carousel_movies.js"></script>
+	<script type="module" src="/src/scripts/carousel_series.js"></script>
+	<script type="module" src="/src/scripts/explorer.js"></script>
+	<script type="module" src="/src/scripts/navigation.js"></script>-->
+</Layout>

@@ -1,0 +1,90 @@
+---
+import { supabase } from '../lib/spClient';
+
+// Obtener datos de la tabla "namebasics1"
+const { data: nameBasics, error } = await supabase
+  .from('namebasics1')
+  .select('*')
+  .limit(10)
+
+if (error) {
+  console.error('Error al obtener los datos de namebasics1:', error.message)
+}
+---
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>NameBasics</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 1rem;
+        font-family: sans-serif;
+      }
+      th, td {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        word-break: break-word;
+        vertical-align: top;
+      }
+      th {
+        background-color: #f0f0f0;
+        text-align: left;
+      }
+      .imgnb{
+        margin-left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition no-underline">
+      ⬅️ Tornar a l'inici
+    </a>
+    
+    <h1>NameBasics</h1>
+
+    {nameBasics && nameBasics.length > 0 ? (
+      <table>
+        <thead>
+          <tr>
+            <th>nconst</th>
+            <th>primaryName</th>
+            <th>birthYear</th>
+            <th>deathYear</th>
+            <th>primaryProfession</th>
+            <th>knownForTitles</th>
+          </tr>
+        </thead>
+        <tbody>
+          {nameBasics.map((item) => (
+            <tr>
+              <td>{item.nconst}</td>
+              <td>{item.primaryName || '—'}</td>
+              <td>{item.birthYear ?? '—'}</td>
+              <td>{item.deathYear ?? '—'}</td>
+              <td>{item.primaryProfession || '—'}</td>
+              <td>{item.knownForTitles || '—'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    ) : (
+      <p>No hay datos en la tabla namebasics1.</p>
+    )}
+    <br><br>
+    <h2>Informació del dataset</h2>
+    <img src="/assets/infonb.png" class="imgnb" alt="Informacion NameBasics" /><br>
+    <h2>Les principals professions</h2>
+    <img src="/assets/professions.png" class="imgnb"  alt="Professions" /><br>
+    <img src="/assets/numact.png" class="imgnb"  alt="Numeros Professions" /><br>
+    <h2>Els actors amb més freqüències</h2>
+    <img src="/assets/actors.png" class="imgnb"  alt="Actors" /><br>
+    <h2>Els valors numerics atípics</h2>
+    <img src="/assets/birth.png" class="imgnb"  alt="BirthYear" /><br>
+    <img src="/assets/rqb.png" class="imgnb"  alt="RQ BirthYear" /><br>
+    <img src="/assets/death.png" class="imgnb"  alt="DeathYear" /><br>
+    <img src="/assets/rqd.png" class="imgnb"  alt="RQ DeathYear" />
+  </body>
+</html>

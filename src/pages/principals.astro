@@ -1,0 +1,70 @@
+---
+import { supabase } from '../lib/spClient'
+
+// Obtener todos los registros de la tabla "principals1"
+const { data: principals, error } = await supabase
+  .from('principals1')
+  .select('*')
+  .limit(10)
+
+if (error) {
+  console.error('Error al obtener los datos de principals1:', error.message)
+}
+---
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Principals</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 1rem;
+        font-family: sans-serif;
+      }
+      th, td {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        word-break: break-word;
+        vertical-align: top;
+      }
+      th {
+        background-color: #f0f0f0;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Principals</h1>
+
+    {principals && principals.length > 0 ? (
+      <table>
+        <thead>
+          <tr>
+            <th>tconst</th>
+            <th>ordering</th>
+            <th>nconst</th>
+            <th>category</th>
+            <th>job</th>
+            <th>characters</th>
+          </tr>
+        </thead>
+        <tbody>
+          {principals.map((item) => (
+            <tr>
+              <td>{item.tconst}</td>
+              <td>{item.ordering ?? '—'}</td>
+              <td>{item.nconst}</td>
+              <td>{item.category || '—'}</td>
+              <td>{item.job || '—'}</td>
+              <td>{item.characters || '—'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    ) : (
+      <p>No hay datos en la tabla principals1.</p>
+    )}
+  </body>
+</html>
