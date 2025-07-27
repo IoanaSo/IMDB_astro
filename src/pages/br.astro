@@ -1,15 +1,21 @@
 ---
-import { supabase } from '../lib/spClient'
+import { supabase } from '../lib/spClient';
 
-const { data: br1data, error } = await supabase
+// Obtener datos de la tabla "br1"
+const { data: br, error } = await supabase
   .from('br1')
   .select('*')
   .limit(10)
+
+if (error) {
+  console.error('Error al obtener los datos de br1:', error.message)
+}
 ---
-<html lang="ca">
+
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <title>Dades BR1</title>
+    <title>BR</title>
     <style>
       table {
         border-collapse: collapse;
@@ -20,21 +26,27 @@ const { data: br1data, error } = await supabase
       th, td {
         padding: 8px 12px;
         border: 1px solid #ccc;
-        vertical-align: top;
         word-break: break-word;
+        vertical-align: top;
       }
       th {
         background-color: #f0f0f0;
         text-align: left;
       }
+      .imgnb{
+        margin-left: 20px;
+      }
     </style>
   </head>
-  <body style="padding: 2rem; font-family: sans-serif; background: #f8f8ff;">
-    <h1>Dades de la taula <code>br1</code></h1>
+  <body>
+    <a href="/" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition no-underline">
+      ⬅️ Tornar a l'inici
+    </a>
+    
+    <h1>BR</h1>
 
-    {error && <p style="color: red;">⚠️ Error: {error.message}</p>}
+    {br && br.length > 0 ? (
 
-    {br1data && br1data.length > 0 ? (
       <table>
         <thead>
           <tr>
@@ -52,7 +64,7 @@ const { data: br1data, error } = await supabase
           </tr>
         </thead>
         <tbody>
-          {br1data.map((row) => (
+          {br.map((row) => (
             <tr>
               <td>{row.tconst}</td>
               <td>{row.titleType}</td>
@@ -70,7 +82,8 @@ const { data: br1data, error } = await supabase
         </tbody>
       </table>
     ) : (
-      <p>No s'han trobat dades a la taula <code>br1</code>.</p>
+      <p>No hay datos en la tabla namebasics1.</p>
     )}
+    <br><br>
   </body>
 </html>
