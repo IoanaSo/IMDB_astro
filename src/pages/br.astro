@@ -1,89 +1,72 @@
----
+import { useEffect, useState } from 'react';
 import { supabase } from '../lib/spClient';
 
-// Obtener datos de la tabla "br1"
-const { data: br, error } = await supabase
-  .from('br1')
-  .select('*')
-  .limit(10)
+export default function BRTable() {
+  const [rows, setRows] = useState([]);
+  const [errorMsg, setErrorMsg] = useState('');
 
-if (error) {
-  console.error('Error al obtener los datos de br1:', error.message)
-}
----
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data, error } = await supabase
+        .from('br1')
+        .select('*')
+        .limit(10);
 
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <title>BR</title>
-    <style>
-      table {
-        border-collapse: collapse;
-        width: 100%;
-        margin-top: 1rem;
-        font-family: sans-serif;
+      if (error) {
+        setErrorMsg(error.message);
+      } else {
+        setRows(data ?? []);
       }
-      th, td {
-        padding: 8px 12px;
-        border: 1px solid #ccc;
-        word-break: break-word;
-        vertical-align: top;
-      }
-      th {
-        background-color: #f0f0f0;
-        text-align: left;
-      }
-      .imgnb{
-        margin-left: 20px;
-      }
-    </style>
-  </head>
-  <body>
-    <a href="/" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition no-underline">
-      ⬅️ Tornar a l'inici
-    </a>
-    
-    <h1>BR</h1>
+    };
 
-    {br && br.length > 0 ? (
+    fetchData();
+  }, []);
 
-      <table>
-        <thead>
-          <tr>
-            <th>tconst</th>
-            <th>titleType</th>
-            <th>primaryTitle</th>
-            <th>originalTitle</th>
-            <th>isAdult</th>
-            <th>startYear</th>
-            <th>endYear</th>
-            <th>runtimeMinutes</th>
-            <th>genres</th>
-            <th>averageRating</th>
-            <th>numVotes</th>
-          </tr>
-        </thead>
-        <tbody>
-          {br.map((row) => (
+  return (
+    <div>
+      <h1>BR</h1>
+      {errorMsg && <p style={{ color: 'red' }}>❌ Error: {errorMsg}</p>}
+      {rows.length > 0 ? (
+        <table>
+          <thead>
             <tr>
-              <td>{row.tconst}</td>
-              <td>{row.titleType}</td>
-              <td>{row.primaryTitle}</td>
-              <td>{row.originalTitle}</td>
-              <td>{row.isAdult ?? '—'}</td>
-              <td>{row.startYear ?? '—'}</td>
-              <td>{row.endYear ?? '—'}</td>
-              <td>{row.runtimeMinutes ?? '—'}</td>
-              <td>{row.genres ?? '—'}</td>
-              <td>{row.averageRating ?? '—'}</td>
-              <td>{row.numVotes ?? '—'}</td>
+              <th>tconst</th>
+              <th>titleType</th>
+              <th>primaryTitle</th>
+              <th>originalTitle</th>
+              <th>isAdult</th>
+              <th>startYear</th>
+              <th>endYear</th>
+              <th>runtimeMinutes</th>
+              <th>genres</th>
+              <th>averageRating</th>
+              <th>numVotes</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    ) : (
-      <p>No hay datos en la tabla br1.</p>
-    )}
-    <br><br>
+          </thead>
+          <tbody>
+            {rows.map((row, idx) => (
+              <tr key={idx}>
+                <td>{row.tconst}</td>
+                <td>{row.titleType}</td>
+                <td>{row.primaryTitle}</td>
+                <td>{row.originalTitle}</td>
+                <td>{row.isAdult ?? '—'}</td>
+                <td>{row.startYear ?? '—'}</td>
+                <td>{row.endYear ?? '—'}</td>
+                <td>{row.runtimeMinutes ?? '—'}</td>
+                <td>{row.genres ?? '—'}</td>
+                <td>{row.averageRating ?? '—'}</td>
+                <td>{row.numVotes ?? '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>No s'han trobat dades a la taula <b>br1</b>.</p>
+      )}
+    </div>
+  );
+}
+
   </body>
 </html>
