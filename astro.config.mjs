@@ -13,3 +13,7 @@ export default defineConfig({
 
   integrations: [react()]
 });
+
+export default defineConfig({
+  base: '/IMDB_astro/',
+});
