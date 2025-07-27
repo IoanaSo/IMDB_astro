@@ -2,7 +2,7 @@
 import { supabase } from '../lib/spClient'
 
 // Obtener todos los registros de la tabla "br1"
-const { data: br1data, error } = await supabase
+const { data: br1, error } = await supabase
   .from('br1')
   .select('*')
   .limit(10)
