@@ -350,12 +350,11 @@ if (error) {
 
         const loadMovies = async () => {
         const { data: movies, error } = await supabase
-            .from('br1')
+            .from('br')
             .select('primaryTitle, startYear, genres, averageRating, numVotes')
             .eq('titleType', 'movie')
             .gt('numVotes', 100000)
             .order('averageRating', { ascending: false })
-            .limit(10);
 
         if (error) {
             console.error("Error carregant pel·lícules:", error);
