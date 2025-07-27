@@ -1,9 +1,15 @@
 ---
 import '../styles/global.css';
-const { data: br1data, error } = await supabase
+import { supabase } from '../lib/spClient';
+
+// Obtener datos de la tabla "br1"
+const { data: br, error } = await supabase
   .from('br1')
   .select('*')
-import { supabase } from '../lib/spClient';
+
+if (error) {
+  console.error('Error al obtener los datos de br1:', error.message)
+}
 ---
 
 <html lang="ca">
