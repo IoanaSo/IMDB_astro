@@ -1,32 +1,51 @@
-import { useEffect, useState } from 'react';
+---
 import { supabase } from '../lib/spClient';
 
-export default function BRTable() {
-  const [rows, setRows] = useState([]);
-  const [errorMsg, setErrorMsg] = useState('');
+// Obtener datos de la tabla "namebasics1"
+const { data: nameBasics, error } = await supabase
+  .from('namebasics1')
+  .select('*')
+  .limit(10)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data, error } = await supabase
-        .from('br1')
-        .select('*')
-        .limit(10);
+if (error) {
+  console.error('Error al obtener los datos de namebasics1:', error.message)
+}
+---
 
-      if (error) {
-        setErrorMsg(error.message);
-      } else {
-        setRows(data ?? []);
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>NameBasics</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 1rem;
+        font-family: sans-serif;
       }
-    };
+      th, td {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        word-break: break-word;
+        vertical-align: top;
+      }
+      th {
+        background-color: #f0f0f0;
+        text-align: left;
+      }
+      .imgnb{
+        margin-left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition no-underline">
+      ⬅️ Tornar a l'inici
+    </a>
+    
+    <h1>NameBasics</h1>
 
-    fetchData();
-  }, []);
-
-  return (
-    <div>
-      <h1>BR</h1>
-      {errorMsg && <p style={{ color: 'red' }}>❌ Error: {errorMsg}</p>}
-      {rows.length > 0 ? (
+    {nameBasics && nameBasics.length > 0 ? (
         <table>
           <thead>
             <tr>
