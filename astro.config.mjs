@@ -23,6 +23,6 @@ import vercel from '@astrojs/vercel/static';
 
 export default defineConfig({
   adapter: vercel(),
-  base: '/imdb-astro/', // si tu repo se llama así
+  base: '/IMDB_astro/', // si tu repo se llama así
 });
 
