@@ -1,21 +1,21 @@
 ---
 import { supabase } from '../lib/spClient';
 
-// Obtener datos de la tabla "namebasics1"
-const { data: nameBasics, error } = await supabase
-  .from('namebasics1')
+// Obtener datos de la tabla "br1"
+const { data: br, error } = await supabase
+  .from('br1')
   .select('*')
   .limit(10)
 
 if (error) {
-  console.error('Error al obtener los datos de namebasics1:', error.message)
+  console.error('Error al obtener los datos de br1:', error.message)
 }
 ---
 
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <title>NameBasics</title>
+    <title>BR</title>
     <style>
       table {
         border-collapse: collapse;
@@ -43,9 +43,9 @@ if (error) {
       ⬅️ Tornar a l'inici
     </a>
     
-    <h1>NameBasics</h1>
+    <h1>Br</h1>
 
-    {nameBasics && nameBasics.length > 0 ? (
+    {br && br.length > 0 ? (
         <table>
           <thead>
             <tr>
