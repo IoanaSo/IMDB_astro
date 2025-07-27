@@ -168,6 +168,21 @@ if (error) {
     <script type="module">
         import { supabase } from '../lib/spClient.js';
 
+  const testConnection = async () => {
+    const { data, error } = await supabase
+      .from('br1') // substitueix pel nom de la teva taula
+      .select('*')
+      .limit(1);
+
+    if (error) {
+      console.error('❌ Error de Supabase:', error.message);
+    } else {
+      console.log('✅ Connexió correcta:', data);
+    }
+  };
+
+  testConnection();
+
         const input = document.getElementById('searchInput');
         const resultsList = document.getElementById('resultsList');
         const searchType = document.getElementById('searchType');
