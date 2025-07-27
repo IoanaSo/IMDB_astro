@@ -1,5 +1,8 @@
 ---
 import '../styles/global.css';
+const { data: br1data, error } = await supabase
+  .from('br1')
+  .select('*')
 ---
 
 <html lang="ca">
