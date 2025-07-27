@@ -1,21 +1,15 @@
 ---
 import { supabase } from '../lib/spClient'
 
-// Obtener todos los registros de la tabla "br1"
-const { data: br1, error } = await supabase
+const { data: br1data, error } = await supabase
   .from('br1')
   .select('*')
   .limit(10)
-
-if (error) {
-  console.error('Error al obtener los datos de br1:', error.message)
-}
 ---
-
-<html lang="es">
+<html lang="ca">
   <head>
     <meta charset="UTF-8" />
-    <title>BR1 Table</title>
+    <title>Dades BR1</title>
     <style>
       table {
         border-collapse: collapse;
@@ -35,14 +29,12 @@ if (error) {
       }
     </style>
   </head>
-  <body class="bg-gradient-to-r from-yellow-200 via-gray-200 to-grey-400 p-10 text-gray-900 font-sans">
-    <a href="/" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition no-underline">
-      ⬅️ Tornar a l'inici
-    </a>
+  <body style="padding: 2rem; font-family: sans-serif; background: #f8f8ff;">
+    <h1>Dades de la taula <code>br1</code></h1>
 
-    <h1>Basics i Ratings</h1>
+    {error && <p style="color: red;">⚠️ Error: {error.message}</p>}
 
-    {br1 && br1.length > 0 ? (
+    {br1data && br1data.length > 0 ? (
       <table>
         <thead>
           <tr>
@@ -60,34 +52,25 @@ if (error) {
           </tr>
         </thead>
         <tbody>
-          {br1.map((item) => (
+          {br1data.map((row) => (
             <tr>
-              <td>{item.tconst}</td>
-              <td>{item.titleType}</td>
-              <td>{item.primaryTitle}</td>
-              <td>{item.originalTitle}</td>
-              <td>{item.isAdult ?? '—'}</td>
-              <td>{item.startYear ?? '—'}</td>
-              <td>{item.endYear ?? '—'}</td>
-              <td>{item.runtimeMinutes}</td>
-              <td>{item.genres}</td>
-              <td>{item.averageRating ?? '—'}</td>
-              <td>{item.numVotes ?? '—'}</td>
+              <td>{row.tconst}</td>
+              <td>{row.titleType}</td>
+              <td>{row.primaryTitle}</td>
+              <td>{row.originalTitle}</td>
+              <td>{row.isAdult ?? '—'}</td>
+              <td>{row.startYear ?? '—'}</td>
+              <td>{row.endYear ?? '—'}</td>
+              <td>{row.runtimeMinutes ?? '—'}</td>
+              <td>{row.genres ?? '—'}</td>
+              <td>{row.averageRating ?? '—'}</td>
+              <td>{row.numVotes ?? '—'}</td>
             </tr>
           ))}
         </tbody>
       </table>
     ) : (
-      <p>No hay datos en la tabla br1.</p>
+      <p>No s'han trobat dades a la taula <code>br1</code>.</p>
     )}
-    <br><br>
-    <img src="/assets/tipusav.png" alt="Tipus audiovisuals" /><br><br>
-    <img src="/assets/numtipusav.png" alt="Numero Tipus audiovisuals" /><br>
-    <img src="/assets/averager.png" alt="Average Rating" /><br>
-     <img src="/assets/boxARGenres.png" alt="Valoracions" /><br><br>
-    <img src="/assets/numVotesGen.png" alt="Numero de Vots per Genere" /><br>
-    <img src="/assets/ARGenres.png" alt="Valoracions per Genere" /><br><br>
-    <img src="/assets/boxAG.png" alt="Valoracions per Genere" />
-    
   </body>
 </html>
