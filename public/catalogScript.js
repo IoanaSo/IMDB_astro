@@ -1,5 +1,5 @@
 // catalogScript.js
-import { supabase } from '../lib/spClient.js';
+import { supabase } from '../src/lib/spClient.js';
 
 // ✅ Test de conexión
 const testConnection = async () => {
