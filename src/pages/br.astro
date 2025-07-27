@@ -42,7 +42,7 @@ if (error) {
 
     <h1>Basics i Ratings</h1>
 
-    {br1data && br1data.length > 0 ? (
+    {br1 && br1.length > 0 ? (
       <table>
         <thead>
           <tr>
@@ -60,7 +60,7 @@ if (error) {
           </tr>
         </thead>
         <tbody>
-          {br1data.map((item) => (
+          {br1.map((item) => (
             <tr>
               <td>{item.tconst}</td>
               <td>{item.titleType}</td>
