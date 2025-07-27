@@ -63,19 +63,19 @@ if (error) {
             </tr>
           </thead>
           <tbody>
-            {rows.map((row, idx) => (
-              <tr key={idx}>
-                <td>{row.tconst}</td>
-                <td>{row.titleType}</td>
-                <td>{row.primaryTitle}</td>
-                <td>{row.originalTitle}</td>
-                <td>{row.isAdult ?? '—'}</td>
-                <td>{row.startYear ?? '—'}</td>
-                <td>{row.endYear ?? '—'}</td>
-                <td>{row.runtimeMinutes ?? '—'}</td>
-                <td>{row.genres ?? '—'}</td>
-                <td>{row.averageRating ?? '—'}</td>
-                <td>{row.numVotes ?? '—'}</td>
+            {br.map((item) => (
+              <tr>
+                <td>{item.tconst}</td>
+                <td>{item.titleType}</td>
+                <td>{item.primaryTitle}</td>
+                <td>{item.originalTitle}</td>
+                <td>{item.isAdult ?? '—'}</td>
+                <td>{item.startYear ?? '—'}</td>
+                <td>{item.endYear ?? '—'}</td>
+                <td>{item.runtimeMinutes ?? '—'}</td>
+                <td>{item.genres ?? '—'}</td>
+                <td>{item.averageRating ?? '—'}</td>
+                <td>{item.numVotes ?? '—'}</td>
               </tr>
             ))}
           </tbody>
