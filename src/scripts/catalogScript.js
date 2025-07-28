@@ -1,10 +1,5 @@
 // catalogScript.js
 import { supabase } from '../lib/spClient.js';
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
-
-        const supabaseUrl = "https://xelucutthalopkgvijrw.supabase.co";
-        const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhlbHVjdXR0aGFsb3BrZ3ZpanJ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4ODE1MjgsImV4cCI6MjA2NzQ1NzUyOH0.xW1gtB2J7V1yVCmueQ5qOOFO0bsTueRa3V9cmwiK5NA";
-        const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // ✅ Test de conexión
 const testConnection = async () => {
