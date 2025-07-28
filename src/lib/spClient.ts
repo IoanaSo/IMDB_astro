@@ -4,3 +4,7 @@ export const supabase = createClient(
   process.env.PUBLIC_SUPABASE_URL!,
   process.env.PUBLIC_SUPABASE_ANON_KEY!
 );
+
+if (!process.env.PUBLIC_SUPABASE_URL || !process.env.PUBLIC_SUPABASE_ANON_KEY) {
+  throw new Error('Supabase env variables are missing');
+}
